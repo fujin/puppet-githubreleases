@@ -1,5 +1,5 @@
 {
-  "name": "dodevops-githubreleases",
+  "name": "fujin-githubreleases",
   "version": "4.1.0",
   "author": "Dennis Ploeger <dennis.ploeger@kps.com>",
   "summary": "Download release tarballs or artifacts from github releases",
@@ -7,41 +7,27 @@
   "source": "https://github.com/dodevops/puppet-githubreleases",
   "project_page": "https://github.com/dodevops/puppet-githubreleases",
   "issues_url": "https://github.com/dodevops/puppet-githubreleases/issues",
-  "dependencies": [
-
-  ],
+  "dependencies": [],
   "operatingsystem_support": [
     {
       "operatingsystem": "CentOS",
-      "operatingsystemrelease": [
-        "7"
-      ]
+      "operatingsystemrelease": ["7"]
     },
     {
       "operatingsystem": "RedHat",
-      "operatingsystemrelease": [
-        "8"
-      ]
+      "operatingsystemrelease": ["8"]
     },
     {
       "operatingsystem": "Debian",
-      "operatingsystemrelease": [
-        "9"
-      ]
+      "operatingsystemrelease": ["9"]
     },
     {
       "operatingsystem": "Ubuntu",
-      "operatingsystemrelease": [
-        "16.04",
-        "18.04"
-      ]
+      "operatingsystemrelease": ["16.04", "18.04"]
     },
     {
       "operatingsystem": "windows",
-      "operatingsystemrelease": [
-        "2019",
-        "10"
-      ]
+      "operatingsystemrelease": ["2019", "10"]
     }
   ],
   "requirements": [

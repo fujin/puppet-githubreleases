@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-def fetch_from_url(url, username, password, use_auth = false, use_oauth = false, ignore_redirect = false, limit = 10)
+def fetch_from_url(url, username, password, use_auth = false, use_oauth = false, use_pat = false, ignore_redirect = false, limit = 10)
   if limit.zero?
     raise(
       ArgumentError,
@@ -28,6 +28,18 @@ def fetch_from_url(url, username, password, use_auth = false, use_oauth = false,
       password,
     )
   end
+  
+  if use_auth && use_pat
+    Puppet.debug('Setting Authorization header to bearer token ofrom password field')
+    request['Accept'] = if url =~ /download/
+                      'application/octet-stream'
+                    else
+                      'application/vnd.github+json'
+                    end
+    request['X-GitHub-Api-Version'] = '2022-11-28'
+    request['Authorization'] = "Bearer #{password}"
+    Puppet.debug(request)
+  end
 
   Puppet.debug(Kernel.format('Fetching %{url}. Limit: %{limit}', url: uri.to_s, limit: limit))
 
@@ -40,7 +52,7 @@ def fetch_from_url(url, username, password, use_auth = false, use_oauth = false,
       if ignore_redirect
         response['location']
       else
-        fetch_from_url(response.location, username, password, use_auth, use_oauth, ignore_redirect, limit - 1)
+        fetch_from_url(response.location, username, password, use_auth, use_oauth, use_pat, ignore_redirect, limit - 1)
       end
     when Net::HTTPSuccess
       Puppet.debug('Success. Returning body.')
@@ -79,6 +91,7 @@ def get_release_info(author, repository, options)
     options[:password],
     options[:use_auth],
     options[:use_oauth],
+    options[:use_pat]
   )
 
   return nil unless release_info_json

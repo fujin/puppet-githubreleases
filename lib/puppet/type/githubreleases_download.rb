@@ -45,6 +45,10 @@ Puppet::Type.newtype('githubreleases_download') do
     desc 'Use OAuth authentication instead of basic authentication.'
     defaultto false
   end
+  newparam(:use_pat, boolean: true, parent: Puppet::Parameter::Boolean) do
+    desc 'Set a bearer token into the Authorization header, from the password.'
+    defaultto false
+  end
   newparam(:author) do
     desc 'Github author of the requested release'
   end
@@ -56,7 +60,7 @@ Puppet::Type.newtype('githubreleases_download') do
     defaultto ''
   end
   newparam(:password) do
-    desc 'GitHub password to use'
+    desc 'GitHub password (or bearer token) to use'
     defaultto ''
   end
 end
