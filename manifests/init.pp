@@ -8,6 +8,7 @@
 # @param is_tag The given release is a tag
 # @param use_auth Authenticate with the GitHub API to circumvent rate limiting
 # @param use_oauth Use OAuth authentication instead of basic authentication.
+# @param use_pat Use Personal Access Token instead of basic authentication.
 # @param author Github author of the requested release
 # @param repository Github repository of the requested release
 # @param username GitHub username to use
@@ -22,17 +23,15 @@ class githubreleases (
   Boolean $is_tag                     = false,
   Variant[Boolean, String] $use_auth  = false,
   Variant[Boolean, String] $use_oauth = false,
+  Variant[Boolean, String] $use_pat = false,
   Optional[String] $author            = undef,
   Optional[String] $repository        = undef,
   Optional[String] $username          = '',
   Optional[String] $password          = ''
-)
-  {
+) {
+  $githubreleases_download = lookup('githubreleases_download', { merge => hash, default_value => undef })
 
-    $githubreleases_download = lookup('githubreleases_download', { merge => hash, default_value => undef })
-
-    if ($githubreleases_download) {
-      create_resources('githubreleases_download', $githubreleases_download)
-    }
-
+  if ($githubreleases_download) {
+    create_resources('githubreleases_download', $githubreleases_download)
   }
+}
