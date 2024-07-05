@@ -38,7 +38,6 @@ def fetch_from_url(url, username, password, use_auth = false, use_oauth = false,
                     end
     request['X-GitHub-Api-Version'] = '2022-11-28'
     request['Authorization'] = "Bearer #{password}"
-    Puppet.debug(request)
   end
 
   Puppet.debug(Kernel.format('Fetching %{url}. Limit: %{limit}', url: uri.to_s, limit: limit))
@@ -142,11 +141,11 @@ def get_asset(release_info, filepattern, contenttype)
     Puppet.debug(
       Kernel.format(
         'Both are matching. Returning URL %{url}',
-        url: release_asset['browser_download_url'],
+        url: release_asset['url'],
       ),
     )
 
-    return release_asset['browser_download_url'] if release_asset.key?('browser_download_url')
+    return release_asset['url'] if release_asset.key?('url')
   end
 
   ''
