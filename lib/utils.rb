@@ -21,7 +21,7 @@ def fetch_from_url(url, username, password, use_auth = false, use_oauth = false,
 
   request = Net::HTTP::Get.new(uri.to_s)
 
-  if use_auth && !use_oauth
+  if use_auth && !use_oauth && !use_pat
     Puppet.debug(Kernel.format('Authenticating as %{username}', username: username))
     request.basic_auth(
       username,
@@ -30,7 +30,7 @@ def fetch_from_url(url, username, password, use_auth = false, use_oauth = false,
   end
   
   if use_auth && use_pat
-    Puppet.debug('Setting Authorization header to bearer token ofrom password field')
+    Puppet.debug('Setting Authorization header to bearer token from password field')
     request['Accept'] = if url =~ /download/
                       'application/octet-stream'
                     else
